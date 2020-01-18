@@ -180,7 +180,11 @@ class CinnamonCalendarApplet extends Applet.TextApplet {
   }
 
   _updateClockAndDate() {
-    let label_string = this.clock.get_clock();
+    let label_string = this.clock
+      .get_clock()
+      .split(" ")
+      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" ");
 
     if (!this.use_custom_format) {
       label_string = label_string.capitalize();

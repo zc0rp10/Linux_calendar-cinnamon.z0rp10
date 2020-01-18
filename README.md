@@ -1,4 +1,4 @@
-# calendar-cinnamon.z0rp10
+# calendar@cinnamon.z0rp10
 This is a modified version of the offical calendar@cinnamon.org applet for Linux Cinnamon
 environment.
 
