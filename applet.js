@@ -14,6 +14,12 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+String.prototype.capitalizeEach = function() {
+  return this.split(" ")
+    .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
+};
+
 function _onVertSepRepaint(area) {
   let cr = area.get_context();
   let themeNode = area.get_theme_node();
@@ -80,6 +86,16 @@ class CinnamonCalendarApplet extends Applet.TextApplet {
       this.settings.bind(
         "custom-format",
         "custom_format",
+        this._onSettingsChanged
+      );
+      this.settings.bind(
+        "capitalize-month-day",
+        "capitalize_month_day",
+        this._onSettingsChanged
+      );
+      this.settings.bind(
+        "capitalize-all",
+        "capitalize_all",
         this._onSettingsChanged
       );
 
@@ -180,11 +196,15 @@ class CinnamonCalendarApplet extends Applet.TextApplet {
   }
 
   _updateClockAndDate() {
-    let label_string = this.clock
-      .get_clock()
-      .split(" ")
-      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-      .join(" ");
+    let label_string = this.clock.get_clock();
+
+    if (this.capitalize_month_day) {
+      label_string = this.clock.get_clock().capitalizeEach();
+    }
+
+    if (this.capitalize_all) {
+      label_string = this.clock.get_clock().toUpperCase();
+    }
 
     if (!this.use_custom_format) {
       label_string = label_string.capitalize();
